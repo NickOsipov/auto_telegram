@@ -16,6 +16,7 @@ from news_sources.types import News, NewsColorsAndFonts
 
 class BaseNewsSource(ABC):
     SOURCE = ""
+    HASHTAG = ""
 
     def __init__(self, url: str):
         self.parsed_source = BeautifulSoup(
@@ -26,7 +27,11 @@ class BaseNewsSource(ABC):
         raw_news = self._get_raw_today_news()
         return self._map_raw_news(raw_news)
 
-    def construct_message(self, news: News) -> str:
+    def _get_footer(self) -> str:
+        link = formatting.hlink(content="Habr News AI", url="https://t.me/+UjLfzGBo2kRlMmVi")
+        return f"{self.HASHTAG} | {link}"
+
+    def construct_caption(self, news: News) -> str:
         title = news.title.strip().rstrip("\n")
         title = formatting.hbold(title)
         if news.summary is not None:
@@ -34,7 +39,7 @@ class BaseNewsSource(ABC):
         else:
             summary = ""
         link = formatting.hlink(content="Подробнее", url=news.article_url)
-        text_message = f"{title}\n{summary}\n{link}\n\n{self.SOURCE}"
+        text_message = f"{title}\n{summary}\n{link}\n\n{self._get_footer()}"
 
         return text_message
 
