@@ -11,6 +11,7 @@ from news_sources.types import HabrNewsAI
 class HabrNewsAISource(BaseNewsSource):
     SOURCE_MAIN_URL = "https://habr.com"
     SOURCE = "Habr"
+    HASHTAG = "#AI"
 
     def __init__(self):
         super().__init__(
@@ -28,9 +29,9 @@ class HabrNewsAISource(BaseNewsSource):
             article_url = self._get_article_url(raw_news=raw_one_news)
             article_soup = self._get_article_soup(article_url=article_url)
             try:
-                if not self._is_fresh_article(article_soup):
-                    print(True)
-                    break
+                # if not self._is_fresh_article(article_soup):
+                #     print(True)
+                #     break
                 title = self._get_title(article_soup)
                 print(title)
                 summary = self._get_summary(article_soup)
