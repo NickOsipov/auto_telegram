@@ -8,6 +8,14 @@ class News:
     img_url: str
     article_url: str
 
+    def __hash__(self):
+        return hash(f"{self.title}")
+
+    def __eq__(self, other):
+        return self.__hash__() == other.__hash__()
+
+    def __ne__(self, other):
+        return not self.__eq__(other)
 
 @dataclass
 class HabrNewsAI(News):
