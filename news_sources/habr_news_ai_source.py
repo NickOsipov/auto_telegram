@@ -2,7 +2,6 @@ from typing import List, Any
 from datetime import datetime as dt, date
 
 from bs4 import BeautifulSoup
-import requests
 
 from news_sources.base_news_source import BaseNewsSource
 from news_sources.types import HabrNewsAI
@@ -33,7 +32,6 @@ class HabrNewsAISource(BaseNewsSource):
                 #     print(True)
                 #     break
                 title = self._get_title(article_soup)
-                print(title)
                 summary = self._get_summary(article_soup)
                 img_url = self._get_image_url(article_soup)
                 result.append(
@@ -46,9 +44,6 @@ class HabrNewsAISource(BaseNewsSource):
                 )
             except Exception as e:
                 pass
-            print(idx_news)
-            if idx_news >= 2:
-                break
         return result
 
     def _get_article_url(self, raw_news: BeautifulSoup) -> str:
