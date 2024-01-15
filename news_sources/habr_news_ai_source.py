@@ -25,12 +25,12 @@ class HabrNewsAISource(BaseNewsSource):
     def _map_raw_news(self, raw_news: List[Any]) -> List[HabrNewsAI]:
         result = []
         for idx_news, raw_one_news in enumerate(raw_news, 1):
+            print("idx_news", idx_news)
             article_url = self._get_article_url(raw_news=raw_one_news)
             article_soup = self._get_article_soup(article_url=article_url)
             try:
-                # if not self._is_fresh_article(article_soup):
-                #     print(True)
-                #     break
+                if not self._is_fresh_article(article_soup):
+                    break
                 title = self._get_title(article_soup)
                 summary = self._get_summary(article_soup)
                 img_url = self._get_image_url(article_soup)
@@ -71,7 +71,7 @@ class HabrNewsAISource(BaseNewsSource):
         summary = article_soup.find(name="div", attrs={"id": "post-content-body"})
         try:
             summary = summary.find("p").text
-        except:
+        except Exception as e:
             summary = None
         return summary
 
