@@ -35,7 +35,10 @@ class BaseNewsSource(ABC):
         storage = NewsStorage()
 
         for one_news in all_news:
+            print("one news")
             if storage.exists_element(element=one_news) or self._is_duplicated_news(one_news=one_news):
+                print(one_news.title)
+                print("this news in storage")
                 continue
 
             storage.store_element(element=one_news)
